@@ -1,0 +1,92 @@
+<html>
+
+    <head>
+        <script src="convertdata.json"></script>
+        <link href="mystyles.css" rel="stylesheet">
+    </head>
+   
+    <body style="background-color: aqua">
+        <img src="content.jpg">
+        
+        <div class="topnav">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a class="active" href="content.html">Data From Coutries</a>
+            
+            <select id="mysel" class="btn" style="float: right;">
+                <option>urban</option>
+                <option>rural</option>
+                <option>all</option>
+            </select>
+            
+            <select id="myyears" class="ybtn" style="float: right;">
+                <option>2000</option>
+                <option>2001</option>
+                <option>2002</option>
+                <option>2003</option>
+                <option>2004</option>
+                <option>2005</option>
+                <option>2006</option>
+                <option>2007</option>
+                <option>2008</option>
+                <option>2009</option>
+                <option>2010</option>
+                <option>2011</option>
+                <option>2012</option>
+                <option>2013</option>
+                <option>2014</option>
+                <option>2015</option>
+                <option>2016</option>
+                <option>2017</option>
+            </select>
+            <input type="text" placeholder="Country year location.."id="ebox">
+            <button class="button" onclick="searchIt()">Search</button>
+        </div>
+        
+        <h1>Find Out About Your Country's Data</h1>
+        <p>Type a country(capitalized) into the search bar and select a year and location from the select menus. Example search: Cambodia</p>
+        <p>Country Results:</p>
+        <div id="mydata"></div>
+        <canvas id="myCanvas" width="800" height="600"></canvas>
+    </body>
+    
+    <script>
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        
+            function searchIt(){
+                var eboxtext = document.getElementById("ebox").value ;
+                var pulldown1 = document.getElementById("mysel").value;
+                var selyear= document.getElementById("myyears").value;
+                var mysearch= "";
+                
+                for (i=0; i<data.length; i++){
+                    mysearch="";
+                    if (eboxtext == data[i]['GeoAreaName'] && selyear ==data[i]['TimePeriod'] && pulldown1 == data[i]['[Location]']){
+                        
+                        mysearch = data[i]['GeoAreaName'] +" in "+ data[i]['TimePeriod']+" had "+data[i]['Value'] +"% of people without clean and safe water."+"<br>";
+                       
+                        ctx.fillStyle = "blue";
+                        ctx.fillRect(10,10, data[i]['Value'] * 10, 50);
+                        y= 35;
+                        w = data[i]['Value'] +"%";
+                        ctx.font="14px Arial";
+                        ctx.fillRect(0,y,w,50);
+                        ctx.fillStyle="white";
+                        ctx.fillText(w,15,y+20);
+                        break;
+                    } 
+                        else{
+                            mysearch="No Data Found. Please ensure your country is capitalized,spelling erros, otherwise we have no data on the country you are looking for.";
+                            
+                            ctx.clearRect(0,0,c.width,c.height)
+                        }
+                }
+                mydiv=document.getElementById("mydata");
+                mydiv.innerHTML= mysearch; 
+                
+            }
+    
+    </script>
+         
+</html>
